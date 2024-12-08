@@ -1,0 +1,25 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Покупка порошка для {{ customer.name }}</h1>
+
+    <form method="post" class="w-50 mx-auto">
+        {% csrf_token %}
+        <div class="form-group mb-4">
+            <label for="powder" class="form-label">Выберите порошок:</label>
+            <select name="powder_id" id="powder" class="form-select">
+                {% for powder in powders %}
+                    <option value="{{ powder.id }}">{{ powder.name }} - {{ powder.price }} сум</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Оформить заказ</button>
+    </form>
+
+    <div class="mt-3 text-center">
+        <a href="{% url 'store:main_page' %}" class="btn btn-secondary">На главную страницу</a>
+    </div>
+</div>
+{% endblock %}

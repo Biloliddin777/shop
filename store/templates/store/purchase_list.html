@@ -1,0 +1,79 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Purchase List</title>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <!-- Заголовок страницы -->
+        <h1 class="text-center text-primary mb-4">История заказов</h1>
+
+        <!-- Таблица покупок -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="card-title text-center text-secondary mb-3"></h2>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Покупатель</th>
+                            <th>Порошок</th>
+                            <th>Количество</th>
+                            <th>Общая цена</th>
+                            <th>Дата</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for purchase in purchases %}
+                            <tr>
+                                <td>{{ purchase.customer.name }}</td>
+                                <td>{{ purchase.powder.name }}</td>
+                                <td>{{ purchase.quantity }}</td>
+                                <td>{{ purchase.total_price }} сум</td>
+                                <td>{{ purchase.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Общая информация по порошку для каждого покупателя -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="card-title text-center text-secondary mb-3"></h2>
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Покупатель</th>
+                            <th>Всего</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for customer, total_powder in customer_total_powder.items %}
+                            <tr>
+                                <td>{{ customer }}</td>
+                                <td>{{ total_powder }} балл</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Кнопка для возврата на главную -->
+        <div class="d-flex justify-content-start mt-3">
+            <a href="{% url 'store:main_page' %}" class="btn btn-secondary btn-lg">
+                <i class="bi bi-arrow-left"></i> Назад
+            </a>
+        </div>
+    </div>
+
+    <!-- Скрипты для Bootstrap (если необходимо для модальных окон и т.д.) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
